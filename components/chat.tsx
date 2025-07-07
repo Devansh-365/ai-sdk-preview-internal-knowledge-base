@@ -39,29 +39,27 @@ export function Chat({
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    if (isMounted !== false && session && session.user) {
+    // Authentication disabled - using generic localStorage key
+    if (isMounted !== false) {
       localStorage.setItem(
-        `${session.user.email}/selected-file-pathnames`,
+        "selected-file-pathnames",
         JSON.stringify(selectedFilePathnames),
       );
     }
-  }, [selectedFilePathnames, isMounted, session]);
+  }, [selectedFilePathnames, isMounted]);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   useEffect(() => {
-    if (session && session.user) {
-      setSelectedFilePathnames(
-        JSON.parse(
-          localStorage.getItem(
-            `${session.user.email}/selected-file-pathnames`,
-          ) || "[]",
-        ),
-      );
-    }
-  }, [session]);
+    // Authentication disabled - using generic localStorage key
+    setSelectedFilePathnames(
+      JSON.parse(
+        localStorage.getItem("selected-file-pathnames") || "[]",
+      ),
+    );
+  }, []);
 
   const { messages, handleSubmit, input, setInput, append } = useChat({
     body: { id, selectedFilePathnames },

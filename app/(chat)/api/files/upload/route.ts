@@ -1,4 +1,5 @@
-import { auth } from "@/app/(auth)/auth";
+// Authentication disabled - commenting out auth import and checks
+//
 import { insertChunks } from "@/app/db";
 import { getPdfContentFromUrl } from "@/utils/pdf";
 import { openai } from "@ai-sdk/openai";
@@ -10,23 +11,24 @@ export async function POST(request: Request) {
   const { searchParams } = new URL(request.url);
   const filename = searchParams.get("filename");
 
-  let session = await auth();
+  // let session = await auth();
 
-  if (!session) {
-    return Response.redirect("/login");
-  }
+  // if (!session) {
+  //   return Response.redirect("/login");
+  // }
 
-  const { user } = session;
+  // const { user } = session;
 
-  if (!user) {
-    return Response.redirect("/login");
-  }
+  // if (!user) {
+  //   return Response.redirect("/login");
+  // }
 
   if (request.body === null) {
     return new Response("Request body is empty", { status: 400 });
   }
 
-  const { downloadUrl } = await put(`${user.email}/${filename}`, request.body, {
+  // Authentication disabled - using generic path instead of user email
+  const { downloadUrl } = await put(`uploads/${filename}`, request.body, {
     access: "public",
   });
 
@@ -43,8 +45,8 @@ export async function POST(request: Request) {
 
   await insertChunks({
     chunks: chunkedContent.map((chunk, i) => ({
-      id: `${user.email}/${filename}/${i}`,
-      filePath: `${user.email}/${filename}`,
+      id: `uploads/${filename}/${i}`,
+      filePath: `uploads/${filename}`,
       content: chunk.pageContent,
       embedding: embeddings[i],
     })),

@@ -4,12 +4,11 @@ import { Toaster } from "sonner";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    "https://ai-sdk-preview-internal-knowledge-base.vercel.app",
-  ),
-  title: "Internal Knowledge Base",
-  description:
-    "Internal Knowledge Base using Retrieval Augmented Generation and Middleware",
+  // metadataBase: new URL(
+  //   "https://ai-sdk-preview-internal-knowledge-base.vercel.app",
+  // ),
+  title: "Dev Agent",
+  description: "Dev Agent using Retrieval Augmented Generation and Middleware",
 };
 
 export default function RootLayout({

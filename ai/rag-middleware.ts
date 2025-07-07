@@ -1,4 +1,5 @@
-import { auth } from "@/app/(auth)/auth";
+// Authentication disabled - commenting out auth import
+//
 import { getChunksByFilePaths } from "@/app/db";
 import { openai } from "@ai-sdk/openai";
 import {
@@ -19,9 +20,10 @@ const selectionSchema = z.object({
 
 export const ragMiddleware: Experimental_LanguageModelV1Middleware = {
   transformParams: async ({ params }) => {
-    const session = await auth();
+    // Authentication disabled - commenting out session check
+    // const session = await auth();
 
-    if (!session) return params; // no user session
+    // if (!session) return params; // no user session
 
     const { prompt: messages, providerMetadata } = params;
 
@@ -78,8 +80,9 @@ export const ragMiddleware: Experimental_LanguageModelV1Middleware = {
     });
 
     // find relevant chunks based on the selection
+    // Authentication disabled - using uploads prefix instead of user email
     const chunksBySelection = await getChunksByFilePaths({
-      filePaths: selection.map((path) => `${session.user?.email}/${path}`),
+      filePaths: selection.map((path) => `uploads/${path}`),
     });
 
     const chunksWithSimilarity = chunksBySelection.map((chunk) => ({
