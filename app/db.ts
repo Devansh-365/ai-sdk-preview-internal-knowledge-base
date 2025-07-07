@@ -24,12 +24,17 @@ export async function createUser(email: string, password: string) {
 export async function createMessage({
   id,
   messages,
-  author,
+  author = "anonymous@example.com", // Default author when no authentication
 }: {
   id: string;
   messages: any;
-  author: string;
+  author?: string;
 }) {
+  const defaultUser = await getUser(author);
+  if (defaultUser.length === 0) {
+    await createUser(author, "anonymous");
+  }
+
   const selectedChats = await db.select().from(chat).where(eq(chat.id, id));
 
   if (selectedChats.length > 0) {

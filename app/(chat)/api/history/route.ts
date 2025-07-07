@@ -9,7 +9,6 @@ export async function GET() {
   //   return Response.json("Unauthorized!", { status: 401 });
   // }
 
-  // Authentication disabled - returning empty array since we don't have user context
-  // const chats = await getChatsByUser({ email: session.user.email! });
-  return Response.json([]);
+  const chats = await getChatsByUser({ email: "anonymous@example.com" });
+  return Response.json(chats);
 }

@@ -1,5 +1,4 @@
 import { customModel } from "@/ai";
-
 import { createMessage } from "@/app/db";
 import { streamText } from "ai";
 
@@ -23,11 +22,10 @@ export async function POST(request: Request) {
       },
     },
     onFinish: async ({ text }) => {
-      // await createMessage({
-      //   id,
-      //   messages: [...messages, { role: "assistant", content: text }],
-      //   author: session.user?.email!,
-      // });
+      await createMessage({
+        id,
+        messages: [...messages, { role: "assistant", content: text }],
+      });
     },
     experimental_telemetry: {
       isEnabled: true,
