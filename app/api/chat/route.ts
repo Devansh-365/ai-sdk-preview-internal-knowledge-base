@@ -25,6 +25,7 @@ export async function POST(request: Request) {
       await createMessage({
         id,
         messages: [...messages, { role: "assistant", content: text }],
+        storeSlug: "dev-agent-staging",
       });
     },
     experimental_telemetry: {
